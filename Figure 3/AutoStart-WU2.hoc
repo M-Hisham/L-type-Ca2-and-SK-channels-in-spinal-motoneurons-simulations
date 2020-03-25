@@ -1,0 +1,47 @@
+// Test list -------------------------------CONTROL VARIABLES-----------------------------------------
+strdef name1, name2
+strdef test 	//
+test = "IV"     // "IV" for default setting with L-type Ca channel and SK
+// "SK"		// to block SK channels.
+
+load_file("celltemplate.hoc")
+
+objref cell
+cell = new Cell2020()
+
+//------------------------------------------------------
+
+
+//Voltage Clamp Experiments ---------------------------
+//--------------------------
+proc runIV_SKon(){
+	print "Running Simulation with L-type Ca channels + SK"
+	load_file("RClampElec2.ses")		 	// Insert the ramp voltage clamp (RClamp) - to measure the current - at the soma
+	load_file("IVRelation.hoc")
+	name1 = "IV.dat"
+	name2 = "IT.dat"
+	PlotIV()
+
+}
+
+proc runIV_SKoff() {
+	cell.Block_SK()
+	print "Running Simulation with L-type Ca channels only"
+	load_file("RClampElec2.ses")		 	// Insert the ramp voltage clamp (RClamp) - to measure the current - at the soma
+	load_file("IVRelation.hoc")
+	name1 = "IVs0.dat"
+	name2 = "ITs0.dat"
+	PlotIV()
+
+}
+// printing Data.
+//-----------------------------------------------------------------------
+access Cell2020[0].soma
+print "Printing Parameters:\n ------"
+print "soma Cav1.3 cond is 		= " , gcabar_CaDen
+print "soma sKl cond is    		= " , gkcabar_CaDen
+print "tau for Cav1.3 	   		= " , O_tau_CaDen
+print "theta for Cav1.3    		= " , theta_m_CaDen
+print "W_tau deactivating for Cav1.3 	= " , W_tau_d_CaDen
+
+print "\n\ncall on of two functions:\n\t1)runIV_SKon()\n\t2)runIV_SKoff()\n\t......"

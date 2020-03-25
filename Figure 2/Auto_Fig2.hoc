@@ -1,0 +1,60 @@
+
+proc AutoStart() {
+
+// loading parameters-------------
+LlvaWU_MAX        = 0.00035 
+sK_CaDen_conduct  = 0
+    // 0.00004
+
+// calling functions--------------
+  basic_shape()
+  biophys()
+  geom_nseg()
+  topology() // to draw the shape
+  //AddCa(3)
+  AddCaDen()  // add the new CaDen channel ( L-type  + sK )
+
+  //load session files...............................................
+  load_file("sessionFile.ses")
+}
+
+
+
+create soma
+access soma
+
+proc basic_shape() { local diam1
+  diam1 = 48.8
+  soma { pt3dadd(-24.4,0, 0,diam1) pt3dadd(24.4,0, 0, diam1)}
+  soma { L = diam1 diam = diam1 }
+
+}
+
+proc geom_nseg() {
+  forall { nseg = int((L/(0.1*lambda_f(100))+.999)/2)*2 + 1  }
+  // nseg = 3
+}
+
+proc biophys() {
+soma { insert pas     g_pas=(1/225)  // for den (1/11000)      //S/cm2//(1/225) for soma
+                      e_pas= -70           //mv//
+                      Ra=70             //ohm.cm//
+                      cm=1              //uf/cm2//
+    }
+}
+
+proc AddCaDen(){
+  forall{
+    insert CaDen
+    theta_m_CaDen   = -30    // -40
+    O_tau_CaDen     = 10     //10
+    O_tau2_CaDen    = 50
+    gcabar_CaDen    = LlvaWU_MAX
+    gkcabar_CaDen   = sK_CaDen_conduct * LlvaWU_MAX
+    W_tau_d_CaDen   = 1200 // was 1200 originally
+
+
+  }
+}
+
+AutoStart()

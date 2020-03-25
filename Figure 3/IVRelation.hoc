@@ -1,0 +1,124 @@
+// Prerequisites:
+// --------------
+// Can be used with BOTH fixed and variable time steps models.
+// if you use this file to compute the synaptic Ampilification DON'T use variable time step ( M.M Oct 2015)
+// Insert the RClamp Electrode (Ramp Voltage Clamp) by loading the RClampElec.ses file
+// Load the BasicWindows.ses file
+
+// Description:
+// --------------
+// Plot the IV relationship
+
+// Format:
+// --------
+// Load this hoc file into the NEURON after loading the model.
+// Call the procedure "PlotIV()" to run the simulation and plot the IV graph
+
+// Sherif ElBasiouny
+// March, 2004
+// new additonal feature was added to save the IV vector after plotting , the data is saved in a vector based on the test name
+// Mohamed Hisham , Aug 2016
+//---------------------------------------------------------------------------------------------------------------------------------
+
+// Definition of pointers for vectors and graphs
+objref MeasuredCurrentVec, TimeI
+objref SomaPotentialVec, TimeV
+objref IVGraph
+strdef sss
+
+objref Ivec, Tvec
+objref Window, Square_Window, RMS_Ivec, RMS_Tvec, RMS_Vvec
+objref RMSGraph, RMS_IVGraph
+objref filePtr , FI_Matrix , IT_Matrix
+
+
+
+proc PlotIV(){
+
+
+MeasuredCurrentVec = new Vector()
+TimeI = new Vector()
+SomaPotentialVec = new Vector()
+TimeV = new Vector()
+
+
+// Record the soma potential
+
+cvode.record(&Cell2020[0].soma.v(0.5), SomaPotentialVec, TimeV)
+                                              		// Record the soma potential, and its time.
+
+// Record the injected current
+cvode.record(&RampIClamp[0].i, MeasuredCurrentVec, TimeI)
+
+run()                                                         		// Run the simulation.
+
+
+IVGraph=new Graph()
+IVGraph.size(-70,20,-50,50)
+IVGraph.label(0.3,0.9,"IV Relation")
+MeasuredCurrentVec.plot(IVGraph, SomaPotentialVec)                 	// Plot the Current vs Soma Potential (IV Plot)
+
+save_Vector(name1)
+
+// Compute the RMS
+//---------------------
+
+	Ivec= new Vector()
+	Tvec= new Vector()
+
+	Window = new Vector()
+	Square_Window = new Vector()
+
+	RMS_Ivec = new Vector()
+	RMS_Tvec = new Vector()
+	RMS_Vvec = new Vector()
+
+	Tvec = TimeI
+	Ivec = MeasuredCurrentVec
+
+
+	
+
+	RMSGraph = new Graph()
+	MeasuredCurrentVec.plot(RMSGraph,TimeI)		     				// Plot the RMS Current vs Averaged Time
+	RMSGraph.label(0.3,0.9,"Current vs time")
+
+	RMS_IVGraph=new Graph()
+	RMS_IVGraph.label(0.3,0.9,"I-V Relation")
+	MeasuredCurrentVec.plot(RMS_IVGraph, SomaPotentialVec)                 			// Plot the RMS Current vs Averaged Soma Potential (Irms-V Plot)
+}
+
+proc save_Vector(){
+
+	
+	filePtr = new File()
+	filePtr.wopen($s1)
+
+	FI_Matrix = new Matrix()
+	FI_Matrix.resize(SomaPotentialVec.size(),2)
+	FI_Matrix.setcol(0,SomaPotentialVec)
+	FI_Matrix.setcol(1,MeasuredCurrentVec)
+
+	// printing Data......
+	filePtr.printf("%d\n",SomaPotentialVec.size())
+	FI_Matrix.fprint(filePtr," %g")
+	print " Data Saved on ",$s1, " ............"
+	filePtr.close()
+
+	if(strcmp(test,"IV") == 0){ // only save for IV test
+		//saving the IT vector too........
+			filePtr = new File()
+			filePtr.wopen(name2)
+
+			IT_Matrix = new Matrix()
+			IT_Matrix.resize(TimeI.size(),2)
+			IT_Matrix.setcol(0,TimeI)
+			IT_Matrix.setcol(1,MeasuredCurrentVec)
+
+			// printing Data......
+			filePtr.printf("%d\n",TimeI.size())
+			IT_Matrix.fprint(filePtr," %g")
+			print " Data Saved on ",name2, " ............"
+			filePtr.close()
+	}
+}
