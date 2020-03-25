@@ -1,5 +1,5 @@
 # L-type-Ca<sup>2+</sup>-and-SK-channels-in-spinal-motoneurons-simulations
-Simulations files , to simulate L-type Ca2+ and SK channels in spinal motoneurons
+Simulations files , to simulate L-type Ca<sup>2+</sup> and SK channels in spinal motoneurons
 
 ## platform:
 files are written in hoc. run on the NEURON simulator
