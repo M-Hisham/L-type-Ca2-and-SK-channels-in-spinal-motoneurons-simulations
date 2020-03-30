@@ -1,11 +1,11 @@
 # L-type-Ca<sup>2+</sup>-and-SK-channels-in-spinal-motoneurons-simulations
-Simulations files , to simulate L-type Ca<sup>2+</sup> and SK channels in spinal motoneurons
+This readme file is to assist in running the simulations published in the modeling study entitled “Dendritic distributions of L-type CaCa<sup>2+</sup> and SK<sub>L</sub> channels in spinal motoneurons: A simulation study” by Mohamed H. Mousa and Sherif M. Elbasiouny.
 
 ## platform:
 * files are written in hoc. 
-* run on the [NEURON simulator](https://neuron.yale.edu/neuron/what_is_neuron) platform
+* Run the simulations on the  [NEURON simulator] (https://neuron.yale.edu/neuron/what_is_neuron) platform
 
 ## Requirments:
-1. install the neuron simulator
-2. compile the mod files.
-* you will need analysis tools to plot the data or analyze it
+1. Install the neuron simulator
+2. Compile the mod files.
+
