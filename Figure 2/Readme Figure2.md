@@ -6,5 +6,4 @@ The instructions in this file will assist in running the code to replicate figur
 3. Change the duration and amplitude of the voltage clamp to generate all the panels in Figure 2 as shown in the paper.
 
 * <b>Note</b>: Please note that the random variable generator is turned on, thus each simulation will be different. To turn the random variable generator off, please comment the RNG function in the CaDen mod file.
-Run the simulation by running "Auto_Fig2.hoc"
-this will create the patch model and insert voltage clamp with 4 stages.
+
