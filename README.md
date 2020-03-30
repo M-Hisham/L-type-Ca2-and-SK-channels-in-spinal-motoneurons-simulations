@@ -9,3 +9,9 @@ This readme file is to assist in running the simulations published in the modeli
 1. Install the neuron simulator
 2. Compile the mod files.
 
+
+
+[![DOI](https://zenodo.org/badge/249858152.svg)](https://zenodo.org/badge/latestdoi/249858152)
+
+
+
