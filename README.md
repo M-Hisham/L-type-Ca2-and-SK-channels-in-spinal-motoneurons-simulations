@@ -3,7 +3,7 @@ This readme file is to assist in running the simulations published in the modeli
 
 ## Platform:
 * files are written in hoc. 
-* Run the simulations on the  [NEURON simulator] (https://neuron.yale.edu/neuron/what_is_neuron) platform
+* Run the simulations on the  [NEURON simulator](https://neuron.yale.edu/neuron/what_is_neuron) platform
 
 ## Requirments:
 1. Install the neuron simulator
