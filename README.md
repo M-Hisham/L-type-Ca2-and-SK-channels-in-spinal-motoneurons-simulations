@@ -9,6 +9,9 @@ This readme file is to assist in running the simulations published in the modeli
 1. Install the neuron simulator
 2. Compile the mod files.
 
+## Published article
+* [JNP Article](https://journals.physiology.org/doi/abs/10.1152/jn.00169.2020)
+
 
 
 [![DOI](https://zenodo.org/badge/249858152.svg)](https://zenodo.org/badge/latestdoi/249858152)
